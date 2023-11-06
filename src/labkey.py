@@ -1,6 +1,6 @@
+from .config import BIGSKY_QA
 import pandas as pd
 from requests import head
-from Dmux.config import BIGSKY_QA
 from labkey.api_wrapper import APIWrapper
 
 

@@ -3,7 +3,7 @@
 # ~~~~~~~~~~~~~~~
 #   module loading functions for the Dmux software package
 # ~~~~~~~~~~~~~~~
-from Dmux.config import get_current_server
+from .config import get_current_server
 from shutil import which
 from os import system, environ
 

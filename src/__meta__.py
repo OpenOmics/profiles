@@ -1,2 +1,2 @@
-__name__    = 'Dmux'
+__name__    = 'OpenOmics_profiles'
 __version__ = '0.0.1'

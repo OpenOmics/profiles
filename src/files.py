@@ -6,9 +6,9 @@
 from pathlib import Path
 from os import access as check_access, R_OK
 from functools import partial
-from sample_sheet import SampleSheet
-from Dmux.labkey import LabKeyServer
-from Dmux.config import LABKEY_CONFIGS, DIRECTORY_CONFIGS
+from .sample_sheet import SampleSheet
+from .labkey import LabKeyServer
+from .config import LABKEY_CONFIGS, DIRECTORY_CONFIGS
 
 
 def get_all_seq_dirs(top_dir, server):
