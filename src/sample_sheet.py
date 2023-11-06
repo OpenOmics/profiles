@@ -7,7 +7,6 @@ import os
 import re
 import sys
 import warnings
-
 from contextlib import ExitStack
 from itertools import chain, repeat, islice
 from pathlib import Path
@@ -41,7 +40,7 @@ from terminaltables import SingleTable
 
 from .util import maybe_render_markdown
 
-__all__: List[str] = ['ReadStructure', 'Sample', 'SampleSheet']
+__all__: List[str] = ['ReadStructure', 'Sample', 'SampleSheet', 'is_ipython_interpreter', 'maybe_render_markdown']
 
 DESIGN_HEADER: List[str] = [
     'Sample_ID',
@@ -63,6 +62,23 @@ MIN_WIDTH: int = 10
 #     documents/products/technotes/
 #     sequencing-sheet-format-specifications-technical-note-970-2017-004.pdf
 VALID_ASCII: Set[str] = set(ascii_letters + digits + punctuation + ' \n\r')
+
+
+def is_ipython_interpreter() -> bool:  # pragma: no cover
+    """Return if we are in an IPython interpreter or not."""
+    import __main__ as main  # type: ignore
+
+    return hasattr(main, '__IPYTHON__')
+
+
+def maybe_render_markdown(string: str) -> Any:
+    """Render a string as Markdown only if in an IPython interpreter."""
+    if is_ipython_interpreter():  # pragma: no cover
+        from IPython.display import Markdown  # type: ignore # noqa: E501
+
+        return Markdown(string)
+    else:
+        return string
 
 
 class ReadStructure(object):
