@@ -94,7 +94,4 @@ if 'partition' not in sbatch_options:
 
 # submit job and echo id back to Snakemake (must be the only stdout)
 jobid = slurm_utils.submit_job(jobscript, **sbatch_options)
-# logger.debug("Registering %s with sidecar...", jobid)
-# register_with_sidecar(jobid)
-# logger.debug("... done registering with sidecar")
 print(jobid)
