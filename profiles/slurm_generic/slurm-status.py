@@ -13,7 +13,6 @@ from CookieCutter import CookieCutter
 logger = logging.getLogger(__name__)
 
 STATUS_ATTEMPTS = 20
-SIDECAR_VARS = os.environ.get("SNAKEMAKE_CLUSTER_SIDECAR_VARS", None)
 DEBUG = bool(int(os.environ.get("SNAKEMAKE_SLURM_DEBUG", "0")))
 
 if DEBUG:
@@ -53,32 +52,11 @@ def get_status_direct(jobid):
     return res[jobid] or ""
 
 
-def get_status_sidecar(jobid):
-    """Get status from cluster sidecar"""
-    sidecar_vars = json.loads(SIDECAR_VARS)
-    url = "http://localhost:%d/job/status/%s" % (sidecar_vars["server_port"], jobid)
-    headers = {"Authorization": "Bearer %s" % sidecar_vars["server_secret"]}
-    try:
-        resp = requests.get(url, headers=headers)
-        if resp.status_code == 404:
-            return ""  # not found yet
-        logger.debug("sidecar returned: %s" % resp.json())
-        resp.raise_for_status()
-        return resp.json().get("status") or ""
-    except requests.exceptions.ConnectionError as e:
-        logger.warning("slurm-status.py: could not query side car: %s", e)
-        logger.info("slurm-status.py: falling back to direct query")
-        return get_status_direct(jobid)
-
 
 jobid = sys.argv[1]
 
-if SIDECAR_VARS:
-    logger.debug("slurm-status.py: querying sidecar")
-    status = get_status_sidecar(jobid)
-else:
-    logger.debug("slurm-status.py: direct query")
-    status = get_status_direct(jobid)
+logger.debug("slurm-status.py: direct query")
+status = get_status_direct(jobid)
 
 logger.debug("job status: %s", repr(status))
 
