@@ -1,8 +1,0 @@
-snakemake
-requests
-webdavclient3
-labkey
-docxtpl
-pandas
-sample-sheet
-wheel
