@@ -1,0 +1,24 @@
+
+cluster-cancel: "scancel"
+restart-times: "0"
+jobscript: "slurm-jobscript.sh"
+cluster: "slurm-submit.py"
+cluster-status: "slurm-status.py"
+max-jobs-per-second: "10"
+max-status-checks-per-second: "10"
+local-cores: 1
+latency-wait: 120
+use-conda: False
+use-singularity: True
+jobs: "1"
+printshellcmds: "True"
+set-resources:
+  __default__:
+    partition: "int"
+    time: 360
+    ntasks: 1
+    mem_mb: 16000
+  bcl2fastq:
+    mem_mb: 32000
+    threads: 24
+    

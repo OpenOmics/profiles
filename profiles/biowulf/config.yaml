@@ -1,0 +1,26 @@
+restart-times: 0
+jobscript: slurm_jobscript.sh
+cluster: bw_submit.py
+cluster-status: bw_status.py
+cluster-cancel: "scancel"
+max-jobs-per-second: 1
+max-status-checks-per-second: 1
+local-cores: 4
+latency-wait: 120
+jobs: 50
+keep-going: True
+rerun-incomplete: True
+use-singularity: True
+# note that the space before the -- is necessary - otherwise cluster
+# execution failes as --cleanenv gets interpreted as a new option since
+# snakemake passes this on as --singularity-args "--cleanenv" - i.e. without
+# a `=`
+singularity-args: " --cleanenv"
+set-resources:
+  __default__:
+    ntasks: 1
+    mem_mb: 16000
+  bcl2fastq:
+    mem_mb: 32000
+    threads: 24
+    disk_mb: 1_000
