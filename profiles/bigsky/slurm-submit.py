@@ -78,6 +78,9 @@ if "error" not in sbatch_options and CookieCutter.get_cluster_logpath():
     log = errlog
     sbatch_options["error"] = errlog
 
+if 'SLURM_DEP_PARENT_JOB' in os.environ:
+    sbatch_options['dependency'] = 'afterok:' + os.environ['SLURM_DEP_PARENT_JOB']
+
 # ensure sbatch output dirs exist
 for o in ("output", "error"):
     slurm_utils.ensure_dirs_exist(sbatch_options[o]) if o in sbatch_options else None

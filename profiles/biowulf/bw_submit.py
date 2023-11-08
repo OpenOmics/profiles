@@ -137,6 +137,9 @@ def make_sbatch_cmd(props):
     else:
         partition = assign_partition(threads, mem_mb, time_min, gres, ntasks, nodes)
 
+    if 'SLURM_DEP_PARENT_JOB' in os.environ:
+        sbatch_cmd.append(f'--dependency=afterok:' + os.environ['SLURM_DEP_PARENT_JOB'])
+
     sbatch_cmd += [
         f"--output=.slurm/logs/{rule}-%j.out",
         f"--partition={partition}",
