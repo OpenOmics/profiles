@@ -12,7 +12,6 @@ from typing import Union
 from uuid import uuid4
 import shlex
 from io import StringIO
-from Dmux.config import get_current_server
 from CookieCutter import CookieCutter
 from snakemake import io
 from snakemake.exceptions import WorkflowError
