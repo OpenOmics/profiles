@@ -46,11 +46,11 @@ def assign_partition(threads, mem_mb, time_min, gres, ntasks, nodes):
 def format_modules(jobscript):
     if 'LOAD_MODULES' not in os.environ:
         return jobscript
-        
+
     module_script = "\n".join([x.strip() for x in os.environ['LOAD_MODULES'].split(';')]) + "\n"
     current_jobscript = open(jobscript).readlines()
     jb = current_jobscript[0:2] + [module_script] +  current_jobscript[2:]
-    
+
     with open(jobscript, 'w') as fo:
         fo.writelines(jb)
     return jobscript
@@ -141,7 +141,7 @@ def make_sbatch_cmd(props):
         sbatch_cmd.append(f'--dependency=afterok:' + os.environ['SLURM_DEP_PARENT_JOB'])
 
     sbatch_cmd += [
-        f"--output=.slurm/logs/{rule}-%j.out",
+        f"--output=logs/masterjob/{rule}-%j.out",
         f"--partition={partition}",
     ]
 
@@ -158,11 +158,11 @@ if __name__ == "__main__":
     jobscript = p.parse_args().jobscript
     props = read_job_properties(jobscript)
     format_modules(jobscript)
-    
+
 
     # make sure log dir exists
     try:
-        os.makedirs(".slurm/logs")
+        os.makedirs("logs/masterjob")
     except FileExistsError:
         pass
     except OSError as err:
