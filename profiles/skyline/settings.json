@@ -1,5 +1,5 @@
 {
     "SBATCH_DEFAULTS": "",
-    "CLUSTER_NAME": "skyline",
+    "CLUSTER_NAME": "skyline-prod",
     "CLUSTER_CONFIG": ""
 }

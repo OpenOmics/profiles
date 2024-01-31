@@ -192,12 +192,12 @@ def format_modules(jobscript):
     if 'LOAD_MODULES' not in os.environ:
         return jobscript
         
-    module_script = "\n".join([x.strip() for x in os.environ['LOAD_MODULES'].split(';')]) + "\n"
-    current_jobscript = open(jobscript).readlines()
-    jb = current_jobscript[0:2] + [module_script] +  current_jobscript[2:]
+    # module_script = "\n".join([x.strip() for x in os.environ['LOAD_MODULES'].split(';')]) + "\n"
+    # current_jobscript = open(jobscript).readlines()
+    # jb = current_jobscript[0:2] + [module_script] +  current_jobscript[2:]
     
-    with open(jobscript, 'w') as fo:
-        fo.writelines(jb)
+    # with open(jobscript, 'w') as fo:
+    #     fo.writelines(jb)
     return jobscript
 
 
