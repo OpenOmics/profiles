@@ -3,15 +3,14 @@ import argparse
 import math
 import os
 import re
-import subprocess as sp
 import sys
+import shlex
+import subprocess as sp
 from datetime import timedelta
 from os.path import dirname
 from time import time as unix_time
 from typing import Union
 from uuid import uuid4
-import shlex
-from io import StringIO
 from CookieCutter import CookieCutter
 from snakemake import io
 from snakemake.exceptions import WorkflowError

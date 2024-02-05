@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
-import json
 import os
 import re
-import requests
 import subprocess as sp
 import shlex
 import sys

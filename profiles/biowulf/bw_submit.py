@@ -13,7 +13,6 @@ Required resources: mem_mb
 Optional resources: disk_mb, gpu, gpu_model, runtime, ntasks, nodes
 
 """
-
 import argparse
 import sys
 import os

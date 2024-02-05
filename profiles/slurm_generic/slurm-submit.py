@@ -2,24 +2,18 @@
 """
 Snakemake SLURM submit script.
 """
-import json
 import logging
 import os
-
-import requests
-from snakemake.utils import read_job_properties
-
 import slurm_utils
+from snakemake.utils import read_job_properties
 from CookieCutter import CookieCutter
 
 logger = logging.getLogger(__name__)
-
 DEBUG = bool(int(os.environ.get("SNAKEMAKE_SLURM_DEBUG", "0")))
 
 if DEBUG:
     logging.basicConfig(level=logging.DEBUG)
     logger.setLevel(logging.DEBUG)
-
 
 # cookiecutter arguments
 SBATCH_DEFAULTS = CookieCutter.SBATCH_DEFAULTS
