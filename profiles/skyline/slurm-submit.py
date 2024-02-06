@@ -89,9 +89,7 @@ if "account" in sbatch_options:
 
 if 'partition' not in sbatch_options:
     sbatch_options['partition'] = 'all'
-
-import ipdb; ipdb.set_trace()
-
+    
 # submit job and echo id back to Snakemake (must be the only stdout)
 jobid = slurm_utils.submit_job(jobscript, **sbatch_options)
 print(jobid)
