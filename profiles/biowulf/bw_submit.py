@@ -118,7 +118,7 @@ def make_sbatch_cmd(props):
     # Use default if not otherwise specified
     sbatch_cmd.append(f"--time={time_min}")
 
-    if "disk_mb" in resources:
+    if "disk_mb" in resources and resources["disk_mb"] > 0:
         disk_mb = as_int("disk_mb")
         disk_gb = ceil(disk_mb / 1024.0)
         gres.append(f"lscratch:{disk_gb}")
