@@ -36,4 +36,4 @@ class CookieCutter:
 
     @staticmethod
     def get_cluster_jobname() -> str:
-        return "%r_%w"
+        return "%r_%S%w"

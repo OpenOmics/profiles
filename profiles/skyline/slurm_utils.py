@@ -149,7 +149,9 @@ def convert_job_properties(job_properties, resource_mapping=None):
         options.update({k: resources[i] for i in v if i in resources})
 
     if "threads" in job_properties:
+        options['ntasks'] = '1'
         options["cpus-per-task"] = job_properties["threads"]
+        options["mincpus"] = job_properties["threads"]
 
     slurm_opts = resources.get("slurm", "")
     if not isinstance(slurm_opts, str):
@@ -339,8 +341,7 @@ class JobLog:
     @property
     def wildcards_str(self) -> str:
         return (
-            ".".join("{}={}".format(k, v) for k, v in self.wildcards.items())
-            or "unique"
+            "_" + ".".join("{}={}".format(k, v) for k, v in self.wildcards.items()) or ""
         )
 
     @property

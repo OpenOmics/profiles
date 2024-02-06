@@ -16,6 +16,7 @@ Optional resources: disk_mb, gpu, gpu_model, runtime, ntasks, nodes
 import argparse
 import sys
 import os
+from uuid import uuid4
 from math import ceil
 from subprocess import run
 from snakemake.utils import read_job_properties
@@ -70,8 +71,14 @@ def make_sbatch_cmd(props):
     gres = []
     ntasks = None
     nodes = None
+    this_uuid = str(uuid4())
+    this_wcs = props.get("wildcards", dict())
+    
+    if this_wcs:
+        wc_name = "_" + ".".join("{}={}".format(k, v) for k, v in this_wcs.items()) or ""
+    jname = f"{rule}_{this_uuid.split('-')[0]}{wc_name}"
 
-    sbatch_cmd = ["sbatch", f"--cpus-per-task={threads}"]
+    sbatch_cmd = ["sbatch", f"--job-name={jname}", f"--cpus-per-task={threads}"]
 
     def as_int(key):
         """
