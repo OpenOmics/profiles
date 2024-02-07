@@ -15,6 +15,7 @@ if DEBUG:
     logging.basicConfig(level=logging.DEBUG)
     logger.setLevel(logging.DEBUG)
 
+
 # cookiecutter arguments
 SBATCH_DEFAULTS = CookieCutter.SBATCH_DEFAULTS
 CLUSTER = CookieCutter.get_cluster_option()
@@ -83,6 +84,12 @@ for o in ("output", "error"):
 if "job-name" not in sbatch_options and "job_name" not in sbatch_options:
     sbatch_options["job-name"] = joblog.jobname
 
+if "account" in sbatch_options:
+    del sbatch_options['account']
+
+if 'partition' not in sbatch_options:
+    sbatch_options['partition'] = 'all'
+    
 # submit job and echo id back to Snakemake (must be the only stdout)
 jobid = slurm_utils.submit_job(jobscript, **sbatch_options)
 print(jobid)

@@ -2,14 +2,10 @@
 """
 Snakemake SLURM submit script.
 """
-import json
 import logging
 import os
-
-import requests
-from snakemake.utils import read_job_properties
-
 import slurm_utils
+from snakemake.utils import read_job_properties
 from CookieCutter import CookieCutter
 
 logger = logging.getLogger(__name__)

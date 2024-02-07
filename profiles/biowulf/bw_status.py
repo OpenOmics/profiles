@@ -1,5 +1,4 @@
 #! /usr/local/bin/python3
-
 import subprocess
 import sys
 import time
