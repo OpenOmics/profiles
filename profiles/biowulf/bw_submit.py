@@ -74,9 +74,11 @@ def make_sbatch_cmd(props):
     this_uuid = str(uuid4())
     this_wcs = props.get("wildcards", dict())
     
+    jname = f"{rule}_{this_uuid.split('-')[0]}"
     if this_wcs:
         wc_name = "_" + ".".join("{}={}".format(k, v) for k, v in this_wcs.items()) or ""
-    jname = f"{rule}_{this_uuid.split('-')[0]}{wc_name}"
+        jname += f"{wc_name}"
+    
 
     sbatch_cmd = ["sbatch", f"--job-name={jname}", f"--cpus-per-task={threads}"]
 
@@ -164,7 +166,6 @@ if __name__ == "__main__":
     jobscript = p.parse_args().jobscript
     props = read_job_properties(jobscript)
     format_modules(jobscript)
-
 
     # make sure log dir exists
     try:
