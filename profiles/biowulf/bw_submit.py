@@ -16,6 +16,7 @@ Optional resources: disk_mb, gpu, gpu_model, runtime, ntasks, nodes
 import argparse
 import sys
 import os
+import textwrap
 from uuid import uuid4
 from math import ceil
 from subprocess import run
@@ -43,16 +44,18 @@ def assign_partition(threads, mem_mb, time_min, gres, ntasks, nodes):
     return "largemem"
 
 
-def format_modules(jobscript):
-    if 'LOAD_MODULES' not in os.environ:
-        return jobscript
-
-    module_script = "\n".join([x.strip() for x in os.environ['LOAD_MODULES'].split(';')]) + "\n"
+def format_js(jobscript):
     current_jobscript = open(jobscript).readlines()
-    jb = current_jobscript[0:2] + [module_script] +  current_jobscript[2:]
 
-    with open(jobscript, 'w') as fo:
-        fo.writelines(jb)
+    jb = None
+    if 'LOAD_MODULES' in os.environ:
+        module_script = "\n".join([x.strip() for x in os.environ['LOAD_MODULES'].split(';')]) + "\n"
+        jb = current_jobscript[0:2] + [module_script] +  current_jobscript[2:]
+    
+    if jb: 
+        with open(jobscript, 'w') as fo:
+            fo.writelines(jb)
+    
     return jobscript
 
 
@@ -165,8 +168,8 @@ if __name__ == "__main__":
     p.add_argument("jobscript", help="Snakemake jobscript with job properties.")
     jobscript = p.parse_args().jobscript
     props = read_job_properties(jobscript)
-    format_modules(jobscript)
-
+    format_js(jobscript)
+    
     # make sure log dir exists
     try:
         os.makedirs("logs/masterjob")
