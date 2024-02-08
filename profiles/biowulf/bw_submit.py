@@ -152,7 +152,7 @@ def make_sbatch_cmd(props):
         sbatch_cmd.append(f'--dependency=afterok:' + os.environ['SLURM_DEP_PARENT_JOB'])
 
     sbatch_cmd += [
-        f"--output=logs/masterjob/{rule}-%j.out",
+        f"--output=logs/slurm/{rule}-%j.out",
         f"--partition={partition}",
     ]
 
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     
     # make sure log dir exists
     try:
-        os.makedirs("logs/masterjob")
+        os.makedirs("logs/slurm")
     except FileExistsError:
         pass
     except OSError as err:
