@@ -1,4 +1,3 @@
-
 cluster-cancel: "scancel"
 restart-times: 3
 jobscript: "slurm-jobscript.sh"
