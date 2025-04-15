@@ -1,5 +1,5 @@
 {
     "SBATCH_DEFAULTS": "",
-    "CLUSTER_NAME": "bs2",
+    "CLUSTER_NAME": "bigsky-prod",
     "CLUSTER_CONFIG": ""
 }
