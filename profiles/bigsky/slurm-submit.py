@@ -89,7 +89,7 @@ if "account" in sbatch_options:
     del sbatch_options['account']
 
 if 'partition' not in sbatch_options:
-    sbatch_options['partition'] = 'int'
+    sbatch_options['partition'] = 'all'
 
 # submit job and echo id back to Snakemake (must be the only stdout)
 jobid = slurm_utils.submit_job(jobscript, **sbatch_options)
